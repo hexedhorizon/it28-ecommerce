@@ -18,7 +18,7 @@ if(isset($_POST["product_id"]) && !empty($_POST["product_id"])){
     } elseif(!filter_var($input_product_name, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
         $product_name_err = "Please enter a valid name.";
     } else{
-        $product_name = $inputproduct_name;
+        $product_name = $input_product_name;
     }
     
     // Validate product details
