@@ -40,32 +40,53 @@
                     $sql = "SELECT * FROM products";
                     if($result = $pdo->query($sql)){
                         if($result->rowCount() > 0){
-                            echo '<table class="table table-bordered table-striped">';
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>#</th>";
-                                        echo "<th>Product Name</th>";
-                                        echo "<th>Product Description</th>";
-                                        echo "<th>Retail Price</th>";
-                                        echo "<th>Action</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = $result->fetch()){
-                                    echo "<tr>";
-                                        echo "<td>" . $row['product_id'] . "</td>";
-                                        echo "<td>" . $row['product_name'] . "</td>";
-                                        echo "<td>" . $row['product_details'] . "</td>";
-                                        echo "<td>" . $row['product_retail_price'] . "</td>";
-                                        echo "<td>";
-                                            echo '<a href="./public/read.php?product_id='. $row['product_id'] .'" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="./public/update.php?product_id='. $row['product_id'] .'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
-                                            echo '<a href="./public/delete.php?product_id='. $row['product_id'] .'" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";                            
-                            echo "</table>";
+                            // Define the table template
+                            $tableTemplate = '
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Product Name</th>
+                                            <th>Product Description</th>
+                                            <th>Retail Price</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{rows}}
+                                    </tbody>
+                                </table>
+                            ';
+                    
+                            // Define the row template
+                            $rowTemplate = '
+                                <tr>
+                                    <td>{{product_id}}</td>
+                                    <td>{{product_name}}</td>
+                                    <td>{{product_details}}</td>
+                                    <td>{{product_retail_price}}</td>
+                                    <td>
+                                        <a href="./public/read.php?product_id={{product_id}}" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
+                                        <a href="./public/update.php?product_id={{product_id}}" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
+                                        <a href="./public/delete.php?product_id={{product_id}}" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
+                                    </td>
+                                </tr>
+                            ';
+                    
+                            // Populate the rows using the row template
+                            $rows = '';
+                            while ($row = $result->fetch()) {
+                                $rowHtml = str_replace(
+                                    array('{{product_id}}', '{{product_name}}', '{{product_details}}', '{{product_retail_price}}'),
+                                    array($row['product_id'], $row['product_name'], $row['product_details'], $row['product_retail_price']),
+                                    $rowTemplate
+                                );
+                                $rows .= $rowHtml;
+                            }
+                    
+                            // Replace the rows placeholder in the table template with the actual rows
+                            echo str_replace('{{rows}}', $rows, $tableTemplate);
+                            
                             // Free result set
                             unset($result);
                         } else{
