@@ -9,7 +9,7 @@
    2.2 Open PHPMyAdmin and import the SQL file.
 
    This will create the necessary database structure and populate it with initial data.
-**
-3. Verify Connections:**
+   
+**3. Verify Connections:**
    Ensure that your database connection settings in your application match the database setup.
    Update database connection configurations if necessary to reflect your local environment.
