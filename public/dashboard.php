@@ -20,7 +20,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        body{ font: 14px sans-serif; text-align: center; }
+        body{ font: 14px sans-serif; }
         .wrapper{
             width: 600px;
             margin: 0 auto;
@@ -55,10 +55,61 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </nav>
 <body>
 
-    <div class="wrapper">
     <div class="container-fluid">
-           
+    <div class="card ">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+    <div class="card-header">Products Recorded</div>
+    <div class="card-body">
+        <h5 class="card-title "></h5>
+        
+        <?php
+        // Include config file
+        require_once "../db/config.php";
+        
+        // Attempt select query execution
+        $sql = "SELECT COUNT(*) AS total_products FROM products";
+        if($stmt = $pdo->prepare($sql)){
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                // Bind result variables
+                $stmt->bindColumn('total_products', $total_products);
+                
+                // Fetch result
+                if($stmt->fetch()){
+                    echo '<h1 class="text-center">' . $total_products . '</h1><br>';
+                } else{
+                    echo '<p>No products found.</p>';
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+        // Close statement
+        unset($stmt);
+        ?>
+        
+        <p class="card-text">Date and Time: <?php echo date("Y-m-d H:i:s"); ?></p>
+
     </div>
+</div>
+
+      </div>
+    </div>
+
 </div>
 
 </body>
