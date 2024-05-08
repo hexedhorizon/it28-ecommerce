@@ -130,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="invalid-feedback"><?php echo $price_err; ?></span>
                     </div>
                     <div class="form-group">
-                        <label>RRP</label>
+                        <label>Recommended Retail Price</label>
                         <input type="text" name="rrp" class="form-control <?php echo (!empty($rrp_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $rrp; ?>">
                         <span class="invalid-feedback"><?php echo $rrp_err; ?></span>
                     </div>
@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="invalid-feedback"><?php echo $img_err; ?></span>
                     </div>
                     <input type="submit" class="btn btn-primary" value="Submit">
-                    <a href="../index.php" class="btn btn-secondary ml-2">Cancel</a>
+                    <a href="../products.php" class="btn btn-secondary ml-2">Cancel</a>
                 </form>
             </div>
         </div>

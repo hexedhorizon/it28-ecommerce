@@ -77,7 +77,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         <th>Product Name</th>
                                         <th>Product Description</th>
                                         <th>Price</th>
-                                        <th>RRP</th>
+                                        <th>Recommended Retail Price</th>
                                         <th>Quantity</th>
                                         <th>Image</th>
                                         <th>Date Added</th>
