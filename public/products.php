@@ -72,8 +72,17 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                     if($result->rowCount() > 0){
                         // Define the table template
                         $tableTemplate = '
-                             
-                                <h5 class="text-left">Returned: ' . $totalRows . ' / ' . $totalRows . ' Records</h3>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th> <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                        </th>
+                                        <th class="text-center" colspan="8"><h6>Showing ' . $totalRows . ' / ' . $totalRows . ' Records</h6></th>
+
+                                        </tr>
+                                    </thead>                               
+                                </table>
+                              
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
