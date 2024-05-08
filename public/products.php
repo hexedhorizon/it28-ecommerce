@@ -67,26 +67,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                 // Attempt select query execution
                 $sql = "SELECT * FROM products";
                 if($result = $pdo->query($sql)){
+                    $totalRows = $result->rowCount();
+
                     if($result->rowCount() > 0){
                         // Define the table template
                         $tableTemplate = '
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Record Number</th>
-                                        <th>Product Name</th>
-                                        <th>Product Description</th>
-                                        <th>Price</th>
-                                        <th>Recommended Retail Price</th>
-                                        <th>Quantity</th>
-                                        <th>Image</th>
-                                        <th>Date Added</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{rows}}
-                                </tbody>
-                            </table>
+                             
+                                <h5 class="text-left">Returned: ' . $totalRows . ' / ' . $totalRows . ' Records</h3>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Record Number</th>
+                                            <th>Product Name</th>
+                                            <th>Product Description</th>
+                                            <th>Price</th>
+                                            <th>Recommended Retail Price</th>
+                                            <th>Quantity</th>
+                                            <th>Image</th>
+                                            <th>Date Added</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{rows}}
+                                    </tbody>
+                                </table>
+                   
                         ';
                 
                         // Define the row template

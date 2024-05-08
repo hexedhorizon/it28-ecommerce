@@ -55,62 +55,41 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </nav>
 <body>
 
-    <div class="container-fluid">
-    <div class="card ">
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Active</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body">
-      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-    <div class="card-header">Products Recorded</div>
-    <div class="card-body">
-        <h5 class="card-title "></h5>
-        
-        <?php
-        // Include config file
-        require_once "../db/config.php";
-        
-        // Attempt select query execution
-        $sql = "SELECT COUNT(*) AS total_products FROM products";
-        if($stmt = $pdo->prepare($sql)){
-            // Attempt to execute the prepared statement
-            if($stmt->execute()){
-                // Bind result variables
-                $stmt->bindColumn('total_products', $total_products);
-                
-                // Fetch result
-                if($stmt->fetch()){
-                    echo '<h1 class="text-center">' . $total_products . '</h1><br>';
+<div class="container-fluid" >
+    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+        <div class="card-header" href="products.php">Products Recorded</div>
+        <div class="card-body">
+            <h5 class="card-title "></h5>
+            
+            <?php
+            // Include config file
+            require_once "../db/config.php";
+            
+            // Attempt select query execution
+            $sql = "SELECT COUNT(*) AS total_products FROM products";
+            if($stmt = $pdo->prepare($sql)){
+                // Attempt to execute the prepared statement
+                if($stmt->execute()){
+                    // Bind result variables
+                    $stmt->bindColumn('total_products', $total_products);
+                    
+                    // Fetch result
+                    if($stmt->fetch()){
+                        echo '<h1 class="text-center">' . $total_products . '</h1><br>';
+                    } else{
+                        echo '<p>No products found.</p>';
+                    }
                 } else{
-                    echo '<p>No products found.</p>';
+                    echo "Oops! Something went wrong. Please try again later.";
                 }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
             }
-        }
-        // Close statement
-        unset($stmt);
-        ?>
-        
-        <p class="card-text">Date and Time: <?php echo date("Y-m-d H:i:s"); ?></p>
-
+            // Close statement
+            unset($stmt);
+            ?>
+            
+            <p class="card-text">Date and Time: <?php echo date("Y-m-d H:i:s"); ?></p>
+        </div>
     </div>
 </div>
-
-      </div>
-    </div>
-
-</div>
-
 </body>
 </html>
