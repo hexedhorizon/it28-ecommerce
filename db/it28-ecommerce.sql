@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 10:48 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: May 08, 2024 at 04:19 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,18 +28,26 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `products` (
-  `product_id` int(11) NOT NULL,
-  `product_name` varchar(100) NOT NULL,
-  `product_details` varchar(255) NOT NULL,
-  `product_retail_price` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` text NOT NULL,
+  `price` decimal(7,2) NOT NULL,
+  `rrp` decimal(7,2) NOT NULL DEFAULT 0.00,
+  `quantity` int(11) NOT NULL,
+  `img` text NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `product_name`, `product_details`, `product_retail_price`) VALUES
-(1, 'Proben', 'Fried chicken proventriculus', 5);
+INSERT INTO `products` (`id`, `title`, `description`, `price`, `rrp`, `quantity`, `img`, `date_added`) VALUES
+(1, 'Isaw', 'Grilled chicken or pork intestines marinated in a tangy and spicy sauce.', 20.00, 25.00, 50, 'isaw.jpg', '2024-05-08 00:00:00'),
+(2, 'Balut', 'Fertilized duck embryo boiled and commonly sold as street food in the Philippines.', 15.00, 20.00, 30, 'balut.jpg', '2024-05-08 00:00:00'),
+(3, 'Kwek-Kwek', 'Quail eggs coated in orange batter and deep-fried, often served with vinegar.', 10.00, 15.00, 40, 'kwek-kwek.jpg', '2024-05-08 00:00:00'),
+(4, 'Fish Balls', 'Deep-fried fish balls served with sweet and spicy sauce.', 12.00, 18.00, 60, 'fishballs.jpg', '2024-05-08 00:00:00'),
+(5, 'Taho', 'Silken tofu topped with sweet syrup and tapioca pearls.', 25.00, 30.00, 20, 'taho.jpg', '2024-05-08 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -69,14 +77,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `created_at`) VALUES
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`product_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -86,13 +87,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
