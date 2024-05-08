@@ -21,10 +21,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body{ font: 14px sans-serif; text-align: center; }
-        .wrapper{
-            width: 50%;
-            margin: 0 auto;
-        }
+     
         table tr td:last-child{
             width: 120px;
         }
@@ -140,7 +137,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
             </div>
         </div>        
     </div>
-</div>
+    </div>
 
 </body>
 </html>
