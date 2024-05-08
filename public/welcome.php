@@ -30,6 +30,30 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         }
     </style>
 </head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Navbar</a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 <body>
     <h1 class="my-5">Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</h1>
     <p>
@@ -38,83 +62,91 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </p>
 
     <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Product Details</h2>
-                        <a href="./public/create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add New Product</a>
-                    </div>
-                    <?php
-                    // Include config file
-                    require_once "../db/config.php";
-                    
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM products";
-                    if($result = $pdo->query($sql)){
-                        if($result->rowCount() > 0){
-                            // Define the table template
-                            $tableTemplate = '
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Product Name</th>
-                                            <th>Product Description</th>
-                                            <th>Retail Price</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{rows}}
-                                    </tbody>
-                                </table>
-                            ';
-                    
-                            // Define the row template
-                            $rowTemplate = '
-                                <tr>
-                                    <td>{{product_id}}</td>
-                                    <td>{{product_name}}</td>
-                                    <td>{{product_details}}</td>
-                                    <td>{{product_retail_price}}</td>
-                                    <td>
-                                        <a href="./public/read.php?product_id={{product_id}}" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
-                                        <a href="./public/update.php?product_id={{product_id}}" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
-                                        <a href="./public/delete.php?product_id={{product_id}}" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
-                                    </td>
-                                </tr>
-                            ';
-                    
-                            // Populate the rows using the row template
-                            $rows = '';
-                            while ($row = $result->fetch()) {
-                                $rowHtml = str_replace(
-                                    array('{{product_id}}', '{{product_name}}', '{{product_details}}', '{{product_retail_price}}'),
-                                    array($row['product_id'], $row['product_name'], $row['product_details'], $row['product_retail_price']),
-                                    $rowTemplate
-                                );
-                                $rows .= $rowHtml;
-                            }
-                    
-                            // Replace the rows placeholder in the table template with the actual rows
-                            echo str_replace('{{rows}}', $rows, $tableTemplate);
-                            
-                            // Free result set
-                            unset($result);
-                        } else{
-                            echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
-                        }
-                    } else{
-                        echo "Oops! Something went wrong. Please try again later.";
-                    }
-                    
-                    // Close connection
-                    unset($pdo);
-                    ?>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mt-5 mb-3 clearfix">
+                    <h2 class="pull-left">Product Details</h2>
+                    <a href="./public/create.php" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Add New Product</a>
                 </div>
-            </div>        
-        </div>
+                <?php
+                // Include config file
+                require_once "../db/config.php";
+                
+                // Attempt select query execution
+                $sql = "SELECT * FROM products";
+                if($result = $pdo->query($sql)){
+                    if($result->rowCount() > 0){
+                        // Define the table template
+                        $tableTemplate = '
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Product Name</th>
+                                        <th>Product Description</th>
+                                        <th>Price</th>
+                                        <th>RRP</th>
+                                        <th>Quantity</th>
+                                        <th>Image</th>
+                                        <th>Date Added</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{rows}}
+                                </tbody>
+                            </table>
+                        ';
+                
+                        // Define the row template
+                        $rowTemplate = '
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{title}}</td>
+                                <td>{{description}}</td>
+                                <td>{{price}}</td>
+                                <td>{{rrp}}</td>
+                                <td>{{quantity}}</td>
+                                <td>{{img}}</td>
+                                <td>{{date_added}}</td>
+                                <td>
+                                    <a href="./public/read.php?id={{id}}" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>
+                                    <a href="./public/update.php?id={{id}}" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>
+                                    <a href="./public/delete.php?id={{id}}" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>
+                                </td>
+                            </tr>
+                        ';
+                
+                        // Populate the rows using the row template
+                        $rows = '';
+                        while ($row = $result->fetch()) {
+                            $rowHtml = str_replace(
+                                array('{{id}}', '{{title}}', '{{description}}', '{{price}}', '{{rrp}}', '{{quantity}}', '{{img}}', '{{date_added}}'),
+                                array($row['id'], $row['title'], $row['description'], $row['price'], $row['rrp'], $row['quantity'], $row['img'], $row['date_added']),
+                                $rowTemplate
+                            );
+                            $rows .= $rowHtml;
+                        }
+                
+                        // Replace the rows placeholder in the table template with the actual rows
+                        echo str_replace('{{rows}}', $rows, $tableTemplate);
+                        
+                        // Free result set
+                        unset($result);
+                    } else{
+                        echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+                    }
+                } else{
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+                
+                // Close connection
+                unset($pdo);
+                ?>
+            </div>
+        </div>        
     </div>
+</div>
+
 </body>
 </html>
