@@ -68,7 +68,7 @@
     <div id="cartContainer"></div>
 
     <script>
-        fetch('./db/products-api.php')
+        fetch('./products/products-api.php')
             .then(response => response.json())
             .then(data => {
                 const booksContainer = document.getElementById('productsDisplay');
