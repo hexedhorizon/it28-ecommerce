@@ -134,19 +134,32 @@
 
     let cartItemsHTML = '';
     cartItems.forEach(item => {
+        // Calculate the total price for the item
+        const totalPrice = item.quantity * item.price;
+
         cartItemsHTML += `
             <li class="list-group-item">
-                <img class="cart-img" src="${item.img}">
-                ${item.title} - Quantity: ${item.quantity}
+                <div class="row">
+                    <div class="col-md-2">
+                        <img class="cart-img" src="${item.img}" alt="${item.title}">
+                    </div>
+                    <div class="col-md-8">
+                        <h6>${item.title}</h6>
+                        <p>Quantity: ${item.quantity}</p>
+                        <p>Total Price: ₱${totalPrice.toFixed(2)}</p>
+                    </div>
+                </div>
             </li>
         `;
     });
+
     cartItemList.innerHTML = cartItemsHTML;
 
     // Update cart count
     cartItemCountElement.textContent = cartItems.reduce((total, item) => total + item.quantity, 0);
-    }
+  }
 
+    
 
     let products = [];
     fetch('./products/products-api.php')
