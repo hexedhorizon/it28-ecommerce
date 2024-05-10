@@ -121,19 +121,26 @@
     }
 
     function updateCartDisplay() {
-        const cartItemCountElement = document.getElementById('cartItemCount');
-        const cartItemList = document.getElementById('cartItemList');
+    const cartItemCountElement = document.getElementById('cartItemCount');
+    const cartItemList = document.getElementById('cartItemList');
 
-        cartItemList.innerHTML = '';
-        cartItemCountElement.textContent = cartItems.reduce((total, item) => total + item.quantity, 0);
+    cartItemList.innerHTML = '';
 
-        cartItems.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.classList.add('list-group-item');
-            listItem.textContent = `${item.title} - Quantity: ${item.quantity}`;
-            cartItemList.appendChild(listItem);
-        });
+    let cartItemsHTML = '';
+    cartItems.forEach(item => {
+        cartItemsHTML += `
+            <li class="list-group-item">
+                <img class="cart-img" src="${item.img}">
+                ${item.title} - Quantity: ${item.quantity}
+            </li>
+        `;
+    });
+    cartItemList.innerHTML = cartItemsHTML;
+
+    // Update cart count
+    cartItemCountElement.textContent = cartItems.reduce((total, item) => total + item.quantity, 0);
     }
+
 
     let products = [];
     fetch('./products/products-api.php')

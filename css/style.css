@@ -12,6 +12,12 @@
     height: 20em; /* Set fixed height to ensure square aspect ratio */
     object-fit: cover; /* Auto-crop and cover the entire container */
 }
+
+.cart-img{
+    width: 5em; /* Ensure the image fills its container */
+    height: 5em; /* Set fixed height to ensure square aspect ratio */
+    
+}
 /* Style for the cart */
 #cartContainer {
     position: fixed;
